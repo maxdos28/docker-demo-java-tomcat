@@ -1,15 +1,17 @@
-# Spring Boot Web Application
+# Spring Boot 3 Web Application
 
-一个现代化的Spring Boot Web应用，使用JAR包启动方式，内嵌Tomcat服务器。
+一个现代化的Spring Boot 3.5.5 Web应用，使用JAR包启动方式，内嵌Tomcat服务器。
 
 ## 项目特性
 
-- 🚀 Spring Boot 2.7.12
+- 🚀 Spring Boot 3.5.5 (最新版本)
+- ☕ Java 17+ 支持 (当前运行在Java 21)
 - 📦 JAR包启动，无需外部Tomcat
 - 🎨 Thymeleaf模板引擎
 - 🔧 Spring Boot DevTools热重载
 - ✅ 完整的单元测试
 - 🌐 RESTful API支持
+- 🔒 Jakarta EE 9+ 规范支持
 
 ## 项目结构
 
@@ -37,7 +39,7 @@
 
 ### 环境要求
 
-- Java 11+
+- Java 17+ (推荐Java 21)
 - Maven 3.6+
 
 ### 运行应用
@@ -135,23 +137,33 @@ WantedBy=multi-user.target
 
 ## 技术栈
 
-- **框架**: Spring Boot 2.7.12
-- **Web**: Spring Web MVC
-- **模板引擎**: Thymeleaf
-- **内嵌服务器**: Tomcat
+- **框架**: Spring Boot 3.5.5
+- **Java版本**: Java 17+ (当前Java 21)
+- **Web**: Spring Web MVC 6.2.10
+- **模板引擎**: Thymeleaf 3.1.3
+- **内嵌服务器**: Tomcat 10.1.44
 - **构建工具**: Maven
-- **测试框架**: JUnit 5 + Spring Boot Test
+- **测试框架**: JUnit 5.12.2 + Spring Boot Test
+- **规范**: Jakarta EE 9+ (替代Java EE)
 
-## 重构说明
+## 重构历程
 
-本项目从传统的WAR包部署重构为现代化的Spring Boot JAR包应用：
+本项目经历了完整的现代化重构：
 
+### 第一次重构（Spring Boot 2.7.12）
 - ✅ 移除了Docker配置，简化部署
 - ✅ 从WAR包改为JAR包，内嵌Tomcat
 - ✅ 使用Thymeleaf替代JSP
 - ✅ 添加了完整的测试覆盖
 - ✅ 现代化的Maven配置
 - ✅ 支持热重载开发
+
+### 第二次重构（Spring Boot 3.5.5）
+- ✅ 升级到Spring Boot 3.5.5最新版本
+- ✅ 升级Java版本要求到17+ (兼容Java 21)
+- ✅ 迁移到Jakarta EE 9+规范
+- ✅ 更新所有依赖到最新版本
+- ✅ 保持向后兼容性
 
 ## 许可证
 

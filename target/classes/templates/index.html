@@ -49,7 +49,8 @@
         
         <div class="info">
             <h3>应用信息</h3>
-            <p><strong>框架:</strong> Spring Boot</p>
+            <p><strong>框架:</strong> Spring Boot <span th:text="${springBootVersion}">3.5.5</span></p>
+            <p><strong>Java版本:</strong> <span th:text="${javaVersion}">17</span></p>
             <p><strong>启动方式:</strong> JAR 包</p>
             <p><strong>内嵌服务器:</strong> Tomcat</p>
             <p><strong>端口:</strong> 8080</p>
@@ -60,7 +61,7 @@
         </div>
         
         <div style="margin-top: 20px; color: #666;">
-            <small>Spring Boot Web Application - 重构完成</small>
+            <small>Spring Boot 3.5.5 Web Application - 升级完成</small>
         </div>
     </div>
 </body>
