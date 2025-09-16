@@ -2,13 +2,20 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.12</version>
+    <relativePath/>
+  </parent>
+
   <groupId>com.example.demo</groupId>
-  <artifactId>java-tomcat-webapp</artifactId>
-  <packaging>war</packaging>
+  <artifactId>spring-boot-webapp</artifactId>
+  <packaging>jar</packaging>
   <version>1.0.0</version>
-  <name>Java Tomcat Web Application</name>
-  <description>A modern Java web application running on Tomcat with Docker support</description>
-  <url>https://github.com/example/java-tomcat-webapp</url>
+  <name>Spring Boot Web Application</name>
+  <description>A modern Spring Boot web application with embedded Tomcat and Docker support</description>
+  <url>https://github.com/example/spring-boot-webapp</url>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
