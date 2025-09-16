@@ -1,55 +1,128 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.daocloud.demo</groupId>
-  <artifactId>docker-demo-java-tomcat</artifactId>
+  
+  <groupId>com.example.demo</groupId>
+  <artifactId>java-tomcat-webapp</artifactId>
   <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>docker-demo-java-tomcat Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+  <version>1.0.0</version>
+  <name>Java Tomcat Web Application</name>
+  <description>A modern Java web application running on Tomcat with Docker support</description>
+  <url>https://github.com/example/java-tomcat-webapp</url>
+
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    
+    <!-- Dependency versions -->
+    <servlet.api.version>4.0.1</servlet.api.version>
+    <jsp.api.version>2.3.3</jsp.api.version>
+    <jstl.version>1.2</jstl.version>
+    <junit.version>5.8.2</junit.version>
+    <mockito.version>4.6.1</mockito.version>
+    
+    <!-- Plugin versions -->
+    <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
+    <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
+    <maven.surefire.plugin.version>3.0.0-M7</maven.surefire.plugin.version>
+  </properties>
+
   <dependencies>
+    <!-- Servlet API -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${servlet.api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!-- JSP API -->
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>${jsp.api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!-- JSTL -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>${jstl.version}</version>
+    </dependency>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
-  <properties>
-    <docker.image.prefix>daocloud.io</docker.image.prefix>
-  </properties>
-
   <build>
-    <finalName>docker-demo-java-tomcat</finalName>
-    <!--
+    <finalName>java-tomcat-webapp</finalName>
+    
     <plugins>
+      <!-- Compiler Plugin -->
       <plugin>
-      	<groupId>com.spotify</groupId>
-      	<artifactId>docker-maven-plugin</artifactId>
-      	<version>0.3.6</version>
-      	<executions>
-      		<execution>
-      			<phase>package</phase>
-      			<goals>
-      				<goal>build</goal>
-      			</goals>
-      		</execution>
-      	</executions>
-      	<configuration>
-      	<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-      	<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-      	<resources>
-      		<resource>
-      			<targetPath>/</targetPath>
-      			<directory>${project.build.directory}</directory>
-      			<include>${project.build.finalName}.war</include>
-      		</resource>
-      	</resources>
-      	</configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+      
+      <!-- WAR Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${maven.war.plugin.version}</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+      
+      <!-- Surefire Plugin for running tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.plugin.version}</version>
       </plugin>
     </plugins>
-    -->
   </build>
+
+  <profiles>
+    <!-- Development profile -->
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <env>dev</env>
+      </properties>
+    </profile>
+    
+    <!-- Production profile -->
+    <profile>
+      <id>prod</id>
+      <properties>
+        <env>prod</env>
+      </properties>
+    </profile>
+  </profiles>
 
 </project>
