@@ -19,7 +19,9 @@ class HomeControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
-                .andExpect(model().attributeExists("message"));
+                .andExpect(model().attributeExists("message"))
+                .andExpect(model().attributeExists("javaVersion"))
+                .andExpect(model().attributeExists("springBootVersion"));
     }
 
     @Test

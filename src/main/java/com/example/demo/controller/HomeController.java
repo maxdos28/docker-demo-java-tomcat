@@ -10,7 +10,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("message", "Hello World from Spring Boot!");
+        model.addAttribute("message", "Hello World from Spring Boot 3.5.5!");
+        model.addAttribute("javaVersion", System.getProperty("java.version"));
+        model.addAttribute("springBootVersion", "3.5.5");
         return "index";
     }
     
