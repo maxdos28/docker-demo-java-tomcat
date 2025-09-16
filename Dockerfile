@@ -1,14 +1,47 @@
-FROM daocloud.io/rockytan/docker-base-maven-tomcat:latest
+# Multi-stage build for Spring Boot JAR application
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 
-ADD pom.xml /tmp/build/
-RUN cd /tmp/build && mvn -q dependency:resolve
+# Set working directory
+WORKDIR /app
 
-ADD src /tmp/build/src
-        #构建应用
-RUN cd /tmp/build && mvn -q -DskipTests=true package \
-        #拷贝编译结果到指定目录
-	&& rm -rf $CATALINA_HOME/webapps/* \
-        && mv target/*.war $CATALINA_HOME/webapps/ROOT.war \
-        #清理编译痕迹
-        && cd / && rm -rf /tmp/build
+# Copy pom.xml first for better caching
+COPY pom.xml .
+
+# Download dependencies
+RUN mvn dependency:resolve
+
+# Copy source code
+COPY src ./src
+
+# Build the application
+RUN mvn clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:17-jre-alpine
+
+# Create non-root user
+RUN addgroup -g 1001 -S spring && \
+    adduser -S spring -u 1001 -G spring
+
+# Set working directory
+WORKDIR /app
+
+# Copy JAR file from build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Change ownership to spring user
+RUN chown spring:spring app.jar
+
+# Switch to non-root user
+USER spring
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
