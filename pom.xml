@@ -1,55 +1,81 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.daocloud.demo</groupId>
-  <artifactId>docker-demo-java-tomcat</artifactId>
-  <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>docker-demo-java-tomcat Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+  
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.5.5</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.example.demo</groupId>
+  <artifactId>spring-boot-webapp</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+  <name>Spring Boot 3 Web Application</name>
+  <description>A modern Spring Boot 3.5.5 web application with embedded Tomcat</description>
+  <url>https://github.com/example/spring-boot-webapp</url>
+
+  <properties>
+    <java.version>17</java.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+
   <dependencies>
+    <!-- Spring Boot Starter Web -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    
+    <!-- Spring Boot Starter Thymeleaf -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    
+    <!-- Spring Boot DevTools (开发时热重载) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Spring Boot Starter Test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    
+    <!-- Spring Boot Starter Validation -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
   </dependencies>
 
-  <properties>
-    <docker.image.prefix>daocloud.io</docker.image.prefix>
-  </properties>
-
   <build>
-    <finalName>docker-demo-java-tomcat</finalName>
-    <!--
+    <finalName>spring-boot-webapp</finalName>
+    
     <plugins>
+      <!-- Spring Boot Maven Plugin -->
       <plugin>
-      	<groupId>com.spotify</groupId>
-      	<artifactId>docker-maven-plugin</artifactId>
-      	<version>0.3.6</version>
-      	<executions>
-      		<execution>
-      			<phase>package</phase>
-      			<goals>
-      				<goal>build</goal>
-      			</goals>
-      		</execution>
-      	</executions>
-      	<configuration>
-      	<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-      	<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-      	<resources>
-      		<resource>
-      			<targetPath>/</targetPath>
-      			<directory>${project.build.directory}</directory>
-      			<include>${project.build.finalName}.war</include>
-      		</resource>
-      	</resources>
-      	</configuration>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-devtools</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
       </plugin>
     </plugins>
-    -->
   </build>
 
 </project>
